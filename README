@@ -4,6 +4,31 @@ MAGICFFI
 MAGICFFI is a CFFI interface to libmagic(3), the file type
 determination library using ``magic'' numbers.
 
+Homepage is http://common-lisp.net/project/magicffi.
+
+Download
+--------
+
+To check out the git repository, run:
+
+----------------------------------------------------------------------
+$ git clone git://github.com/dochang/magicffi.git
+----------------------------------------------------------------------
+
+To browse code online, go to:
+
+http://github.com/dochang/magicffi
+
+You can also download the repo's snapshot.
+
+Zipball::
+
+http://github.com/dochang/magicffi/zipball/master
+
+Tarball::
+
+http://github.com/dochang/magicffi/tarball/master
+
 Installation
 ------------
 
@@ -63,3 +88,11 @@ See the following table for the pattern:
 |==========================================
 
 All constant names are exported.
+
+Support and mailing lists
+-------------------------
+
+If you have questions, bug reports, feature requests and patches, send
+your email to the magicffi-devel mailing list.  Please visit:
+
+http://common-lisp.net/cgi-bin/mailman/listinfo/magicffi-devel
