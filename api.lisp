@@ -52,6 +52,18 @@ MAGIC-ERROR is signaled on failure."
                        :string)
       (magic-error magic)))
 
+(defun magic-buffer (magic string)
+  "Returns a textual description of the contents of the STRING argument.
+An error of type MAGIC-ERROR is signaled on failure."
+  (let ((size (length string)))
+    (with-foreign-string (buffer string)
+      (or (foreign-funcall "magic_buffer"
+                           cmagic magic
+                           :pointer buffer
+                           size size
+                           :string)
+          (magic-error magic)))))
+
 (defun magic-setflags (magic flags)
   "Sets the magic flags.  Signals an error of type SIMPLE-ERROR on
 systems that don't support utime(2), or utimes(2) when :PRESERVE-ATIME

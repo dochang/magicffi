@@ -23,6 +23,7 @@
    :magic-open
    :magic-close
    :magic-file
+   :magic-buffer
    :magic-setflags
    :magic-check
    :magic-compile

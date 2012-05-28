@@ -1,5 +1,8 @@
 (in-package :magicffi)
 
+;;; cffi
+(defctype size :unsigned-int)
+
 ;;; errors
 (define-condition magic-error (error)
   ((%errno :initarg :errno
