@@ -9,6 +9,12 @@
            (desired (read-file-into-string resultfile)))
       (format t "~A: ~A~%" testfile result)
       (unless (string= result desired)
+        (error "Error: result was~%~A~%expected:~%~A~%" result desired)))
+    (let* ((buffer (read-file-into-string testfile))
+           (result (magic-buffer cookie buffer))
+           (desired (read-file-into-string resultfile)))
+      (format t "~A: ~A~%" testfile result)
+      (unless (string= result desired)
         (error "Error: result was~%~A~%expected:~%~A~%" result desired)))))
 
 (defun run-tests ()
