@@ -1,5 +1,15 @@
 (in-package :cffi-grovel)
 
+(define-grovel-syntax include-or (&rest file-names)
+  (loop
+     for file-name in file-names
+     if (probe-file file-name)
+     do
+       (return
+         (format out "#include <~A>~%" file-name))))
+
+(push 'include-or *header-forms*)
+
 ;; Defines a bitfield, with elements specified as ((lisp-name c-name)
 ;; &key documentation).  name-and-opts can be either a symbol as name,
 ;; or a list (name &key base-type).

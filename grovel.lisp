@@ -1,6 +1,7 @@
 (in-package :magicffi)
 
-(include "/usr/include/magic.h")
+(include-or "/usr/include/magic.h"
+            "/usr/local/include/magic.h")
 
 (progn
   (constant (+MAGIC-NONE+ "MAGIC_NONE")
