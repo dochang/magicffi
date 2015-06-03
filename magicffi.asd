@@ -24,6 +24,11 @@
                (:file :api)))
 
 (defsystem :magicffi-test
+  :description "magicffi test system"
+  :long-description "Test system for magicffi, a file type determination library."
+  :author "Desmond O. Chang <dochang+magicffi@gmail.com>"
+  :maintainer "Desmond O. Chang <dochang+magicffi@gmail.com>"
+  :license "Simplified BSD License"
   :depends-on (:magicffi :alexandria)
   :components ((:module "tests"
                         :serial t
