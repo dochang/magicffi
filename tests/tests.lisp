@@ -1,4 +1,4 @@
-(in-package :magicffi-test)
+(in-package :magicffi/test)
 
 (defun do-test (testfile resultfile)
   (with-open-magic (cookie '(:none))

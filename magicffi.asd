@@ -23,7 +23,7 @@
                (:file :types)
                (:file :api)))
 
-(defsystem :magicffi-test
+(defsystem :magicffi/test
   :description "magicffi test system"
   :long-description "Test system for magicffi, a file type determination library."
   :author "Desmond O. Chang <dochang+magicffi@gmail.com>"
@@ -31,10 +31,10 @@
   :license "Simplified BSD License"
   :depends-on (:magicffi :alexandria)
   :components ((:module "tests"
-                        :serial t
-                        :components ((:file :package)
-                                     (:file :tests)))))
+                :serial t
+                :components ((:file :package)
+                             (:file :tests)))))
 
 (defmethod perform ((o test-op) (c (eql (find-system :magicffi))))
-  (operate 'load-op :magicffi-test)
-  (funcall (intern "RUN-TESTS" :magicffi-test)))
+  (operate 'load-op :magicffi/test)
+  (funcall (intern "RUN-TESTS" :magicffi/test)))
