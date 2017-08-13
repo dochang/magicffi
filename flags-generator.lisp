@@ -2,7 +2,16 @@
 
 (defun generate-flags (out in)
   "Internal for the author to generate the grovel file. Params are
-output stream and input stream."
+output stream and input stream.
+
+Usage:
+
+    (let ((outfile (asdf:system-relative-pathname :magicffi "grovel.lisp")))
+      (with-open-file (in "/usr/include/magic.h" :direction :input)
+        (with-open-file (out outfile :direction :output :if-exists :overwrite)
+          (magicffi::generate-flags out in))))
+
+"
   (labels ((%read-rest ()
              (loop :for line := (read-line in nil)
                    :while line
