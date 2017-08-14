@@ -3,7 +3,7 @@
 (defpackage :magicffi
   (:use :cl :cffi)
   (:documentation "Usage:
-> (asdf:oos 'asdf:load-op :magicffi)
+> (asdf:load-system :magicffi)
 > (use-package :magicffi)
 > (with-open-magic (magic '(:mime-type :symlink))
     (magic-load magic)

@@ -6,7 +6,7 @@
 (in-package :magicffi/asdf)
 
 (eval-when (:load-toplevel :execute)
-  (operate 'load-op :cffi-grovel))
+  (load-system :cffi-grovel))
 
 (defsystem :magicffi
   :description "cffi interface to libmagic(3)"
@@ -36,5 +36,5 @@
                              (:file :tests)))))
 
 (defmethod perform ((o test-op) (c (eql (find-system :magicffi))))
-  (operate 'load-op :magicffi/test)
+  (load-system :magicffi/test)
   (funcall (intern "RUN-TESTS" :magicffi/test)))
