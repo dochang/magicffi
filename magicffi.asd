@@ -1,9 +1,9 @@
 (in-package :cl-user)
 
-(defpackage :magicffi-asdf
+(defpackage :magicffi/asdf
   (:use :cl :asdf))
 
-(in-package :magicffi-asdf)
+(in-package :magicffi/asdf)
 
 (eval-when (:load-toplevel :execute)
   (operate 'load-op :cffi-grovel))
