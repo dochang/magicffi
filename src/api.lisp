@@ -118,6 +118,24 @@ of type MAGIC-ERROR on failure."
 
 (defmacro with-open-magic ((magic flags) &body body)
   "Opens the magic cookie MAGIC, executes BODY and close MAGIC."
-  `(let* ((,magic (magic-open ,flags)))
-     (unwind-protect (progn ,@body)
-       (magic-close ,magic))))
+  `(progn
+     (magic-verify-version)
+     (let* ((,magic (magic-open ,flags)))
+       (unwind-protect (progn ,@body)
+         (magic-close ,magic)))))
+
+(defun magic-version ()
+  "The magic_version() command returns the version number of this library
+which is compiled into the shared library using the constant
+MAGIC_VERSION from <magic.h>.  This can be used by client programs to
+verify that the version they compile against is the same as the version
+that they run against."
+  (foreign-funcall "magic_version" :int))
+
+(defun magic-verify-version ()
+  (assert
+   (=
+    ;; version in the shared library
+    (magic-version)
+    ;; version in the header
+    +magic-version+)))
