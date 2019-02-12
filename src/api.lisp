@@ -116,12 +116,23 @@ pathname designators.  Returns 'true' on success and signals an error
 of type MAGIC-ERROR on failure."
   (%database-funcall "magic_load" magic pathname-list))
 
-(defmacro with-open-magic ((magic flags) &body body)
-  "Opens the magic cookie MAGIC, executes BODY and close MAGIC."
+(defmacro with-open-magic ((magic &optional (flags ''(:none)) (magicfiles nil)) &body body)
+  "Opens the magic cookie MAGIC, executes BODY and close MAGIC.
+
+FLAGS:
+ A list of keywords (see types), defaulted to (:none).
+
+MAGICFILES:
+ NIL, or a list of pathname designators for the database files.
+ Defaulted to NIL, which uses the default database available in the system. This covers the most usage.
+"
   `(progn
      (magic-verify-version)
      (let* ((,magic (magic-open ,flags)))
-       (unwind-protect (progn ,@body)
+       (unwind-protect
+            (progn
+              (magic-load ,magic ,magicfiles)
+              ,@body)
          (magic-close ,magic)))))
 
 (defun magic-version ()
