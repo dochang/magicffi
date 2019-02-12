@@ -24,7 +24,8 @@
                                    "-I/usr/local/include")
                                   )
                (:file :types)
-               (:file :api)))
+               (:file :api)
+               (:file :shortcuts)))
 
 (defsystem magicffi/test
   :description "magicffi test system"
