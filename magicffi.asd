@@ -6,7 +6,7 @@
   :maintainer "Desmond O. Chang <dochang+magicffi@gmail.com>"
   :license "Simplified BSD License"
   :defsystem-depends-on (:cffi-grovel)
-  :depends-on (:cffi-grovel :cffi :cl-ppcre )
+  :depends-on (:cffi-grovel :cffi :cl-ppcre)
   :serial t
   :pathname "src"
   :components ((:file :package)
@@ -32,9 +32,8 @@
   :author "Desmond O. Chang <dochang+magicffi@gmail.com>"
   :maintainer "Desmond O. Chang <dochang+magicffi@gmail.com>"
   :license "Simplified BSD License"
-  :depends-on (:magicffi :alexandria)
+  :depends-on (:magicffi :fiveam)
   :pathname "tests"
   :serial t
-  :components ((:file :package)
-               (:file :tests))
-  :perform (test-op :after (op c) (eval (read-from-string "(magicffi/test::RUN-TESTS)"))))
+  :components ((:file :package))
+  :perform (test-op :after (op c) (eval (read-from-string "(5am:run! :magicffi)"))))
