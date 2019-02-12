@@ -16,7 +16,7 @@ the default database files defined by libmagic.")
          :errno (foreign-funcall "magic_errno" cmagic magic :int)
          :error (foreign-funcall "magic_error" cmagic magic :string)))
 
-(defcvar *errno* :int)
+(defcvar *errno* :int "A symbol macro for accessing C ERRNO static variable.")
 
 (defun magic-open (flags)
   "Creates a magic cookie and returns it.  An error of type
