@@ -52,3 +52,11 @@
   (is (equal "text/x-lisp; charset=us-ascii"
              (with-open-magic (magic '(:mime))
                (magic-file magic (rel "package.lisp"))))))
+
+(test magicffi
+      (is (equal "utf-8"
+                 (pathname-mime-encoding (rel "testtxt.utf8"))))
+      (is (equal "us-ascii"
+                 (pathname-mime-encoding (rel "testtxt.ascii"))))
+      (is (equal "iso-8859-1"
+                 (pathname-mime-encoding (rel "testtxt.eucjp")))))
