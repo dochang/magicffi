@@ -1,10 +1,5 @@
 (in-package :magicffi)
 
-(defvar *magic-database* nil
-  "Default magic database files.  It can be NIL(default), or a
-designator for a non-empty list of pathname designators.  NIL means
-the default database files defined by libmagic.")
-
 (define-foreign-library libmagic
   (t (:default "libmagic")))
 
@@ -84,6 +79,11 @@ is set; otherwise, returns 'true'."
     (null (null-pointer))
     (atom (%truename pathname-list))
     (cons (%pathname-concat pathname-list))))
+
+(defvar *magic-database* nil
+  "Default magic database files.  It can be NIL(default), or a
+designator for a non-empty list of pathname designators.  NIL means
+the default database files defined by libmagic.")
 
 (defmacro %database-funcall (name-and-options magic pathname-list)
   `(or (let* ((*magic-database* (or ,pathname-list *magic-database*)))
