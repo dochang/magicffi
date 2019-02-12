@@ -1,7 +1,6 @@
 (cl:in-package :magicffi)
 
-(include-or "/usr/include/magic.h"
-            "/usr/local/include/magic.h")
+(include "magic.h")
 
 (progn
  (constant (+magic-none+ "MAGIC_NONE") :documentation "No flags")
