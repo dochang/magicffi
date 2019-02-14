@@ -10,7 +10,6 @@
   :serial t
   :pathname "src"
   :components ((:file :package)
-               (:file :flags-generator)
                (:cffi-grovel-file :grovel
                                   :cc-flags
                                   (#+linux "-idirafter"
