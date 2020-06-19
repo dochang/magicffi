@@ -10,7 +10,7 @@ exec ros -Q -- $0 "$@"
   (declare (ignorable argv))
   (uiop:quit (if (handler-case
                      (progn
-                       (asdf:load-system :magicffi/test)
+                       (ql:quickload :magicffi/test)
                        (eval (read-from-string "(5am:run! :magicffi)")))
                    (serious-condition (c)
                      (describe c)
