@@ -1,6 +1,7 @@
 (in-package :magicffi)
 
 (define-foreign-library libmagic
+  (:unix (:or "libmagic.so.1.0.0" "libmagic.so.1" "libmagic.so"))
   (t (:default "libmagic")))
 
 (use-foreign-library libmagic)
