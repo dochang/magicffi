@@ -1,5 +1,13 @@
 (in-package :magicffi)
 
+;; check if groveller successfully groveled
+
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (when (not (boundp '+magic-version+))
+    (error "grovelling +magic-version+ from MAGIC_VERSION in magic.h header file failed!
+ Make sure your system has the header file installed.
+ For example, in ubuntu/debian, try `sudo apt get install libmagic-dev`.")))
+
 (define-foreign-library libmagic
   (:unix (:or "libmagic.so.1.0.0" "libmagic.so.1" "libmagic.so"))
   (t (:default "libmagic")))
