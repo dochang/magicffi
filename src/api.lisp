@@ -1,11 +1,15 @@
 (in-package :magicffi)
 
-(defvar *magic-database* nil
-  "Default magic database files.  It can be NIL(default), or a
-designator for a non-empty list of pathname designators.  NIL means
-the default database files defined by libmagic.")
+;; check if groveller successfully groveled
+
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (when (not (boundp '+magic-version+))
+    (error "grovelling +magic-version+ from MAGIC_VERSION in magic.h header file failed!
+ Make sure your system has the header file installed.
+ For example, in ubuntu/debian, try `sudo apt get install libmagic-dev`.")))
 
 (define-foreign-library libmagic
+  (:unix (:or "libmagic.so.1.0.0" "libmagic.so.1" "libmagic.so"))
   (t (:default "libmagic")))
 
 (use-foreign-library libmagic)
@@ -16,7 +20,7 @@ the default database files defined by libmagic.")
          :errno (foreign-funcall "magic_errno" cmagic magic :int)
          :error (foreign-funcall "magic_error" cmagic magic :string)))
 
-(defcvar *errno* :int)
+(defcvar *errno* :int "A symbol macro for accessing C ERRNO static variable.")
 
 (defun magic-open (flags)
   "Creates a magic cookie and returns it.  An error of type
@@ -85,6 +89,11 @@ is set; otherwise, returns 'true'."
     (atom (%truename pathname-list))
     (cons (%pathname-concat pathname-list))))
 
+(defvar *magic-database* nil
+  "Default magic database files.  It can be NIL(default), or a
+designator for a non-empty list of pathname designators.  NIL means
+the default database files defined by libmagic.")
+
 (defmacro %database-funcall (name-and-options magic pathname-list)
   `(or (let* ((*magic-database* (or ,pathname-list *magic-database*)))
          (foreign-funcall ,name-and-options
@@ -116,8 +125,37 @@ pathname designators.  Returns 'true' on success and signals an error
 of type MAGIC-ERROR on failure."
   (%database-funcall "magic_load" magic pathname-list))
 
-(defmacro with-open-magic ((magic flags) &body body)
-  "Opens the magic cookie MAGIC, executes BODY and close MAGIC."
-  `(let* ((,magic (magic-open ,flags)))
-     (unwind-protect (progn ,@body)
-       (magic-close ,magic))))
+(defmacro with-open-magic ((magic &optional (flags ''(:none)) (magicfiles nil)) &body body)
+  "Opens the magic cookie MAGIC, executes BODY and close MAGIC.
+
+FLAGS:
+ A list of keywords (see types), defaulted to (:none).
+
+MAGICFILES:
+ NIL, or a list of pathname designators for the database files.
+ Defaulted to NIL, which uses the default database available in the system. This covers the most usage.
+"
+  `(progn
+     (magic-verify-version)
+     (let* ((,magic (magic-open ,flags)))
+       (unwind-protect
+            (progn
+              (magic-load ,magic ,magicfiles)
+              ,@body)
+         (magic-close ,magic)))))
+
+(defun magic-version ()
+  "The magic_version() command returns the version number of this library
+which is compiled into the shared library using the constant
+MAGIC_VERSION from <magic.h>.  This can be used by client programs to
+verify that the version they compile against is the same as the version
+that they run against."
+  (foreign-funcall "magic_version" :int))
+
+(defun magic-verify-version ()
+  (assert
+   (=
+    ;; version in the shared library
+    (magic-version)
+    ;; version in the header
+    +magic-version+)))

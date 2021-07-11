@@ -63,4 +63,12 @@
    :+MAGIC-NO-CHECK-TROFF+
 
    ;; macros
-   :with-open-magic))
+   :with-open-magic
+
+   ;; more api
+   :pathname-extension
+   :pathname-apple
+   :pathname-mime
+   :pathname-mime-encoding
+   :pathname-mime-type
+   :pathname-file))
